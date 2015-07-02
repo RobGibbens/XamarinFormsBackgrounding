@@ -14,6 +14,7 @@ namespace FormsBackgrounding
 			InitializeComponent ();
 
 			longRunningTask.Clicked += StartLongRunningTask;
+			stopLongRunningTask.Clicked += StopLongRunningTask;
 			download.Clicked += Download;
 
 			MessagingCenter.Subscribe<DownloadProgressMessage> (this, "DownloadProgressMessage", (message) => {
@@ -38,6 +39,11 @@ namespace FormsBackgrounding
 			};
 
 			await _longRunningTaskExample.Start ();
+		}
+
+		void StopLongRunningTask (object sender, EventArgs e)
+		{
+			_longRunningTaskExample.Stop ();
 		}
 
 		void Download (object sender, EventArgs e)

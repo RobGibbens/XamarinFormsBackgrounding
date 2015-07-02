@@ -26,5 +26,10 @@ namespace FormsBackgrounding.Droid
 				Application.Context.StartService (intent);
 			});
 		}
+
+		public void Stop ()
+		{
+			throw new NotImplementedException ();
+		}
 	}
 }

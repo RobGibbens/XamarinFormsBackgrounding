@@ -9,5 +9,6 @@ namespace FormsBackgrounding
 	{
 		event EventHandler<TickedEventArgs> Ticked;
 		Task Start();
+		void Stop();
 	}	
 }

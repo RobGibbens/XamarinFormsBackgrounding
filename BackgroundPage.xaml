@@ -7,6 +7,8 @@
 	<StackLayout>
 		<Button Text="Start Long Running Task" x:Name="longRunningTask" />
 		<Label Text="Ticker" x:Name="ticker" TextColor="Black" />
+		<Button Text="Stop Long Running Task" x:Name="stopLongRunningTask" />
+
 		<Button Text="Start Internet Download" x:Name="download" />
 		<Label Text="Status" x:Name="downloadStatus" TextColor="Black" />
         <Image x:Name="catImage" Aspect="AspectFill" HeightRequest="150" WidthRequest="150"></Image>

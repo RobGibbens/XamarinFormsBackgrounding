@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
 using UIKit;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace FormsBackgrounding.iOS
 {
@@ -13,25 +10,43 @@ namespace FormsBackgrounding.iOS
 		public event EventHandler<TickedEventArgs> Ticked = delegate {};
 
 		nint _taskId;
+		CancellationTokenSource _cts = new CancellationTokenSource ();
 
 		public async Task Start ()
 		{
+			_cts = new CancellationTokenSource ();
+			_cts.Token.ThrowIfCancellationRequested ();
+
 			_taskId = UIApplication.SharedApplication.BeginBackgroundTask ("LongRunningTask", OnExpiration);
 
-			await Task.Run (() => {
-				for (long i = 0; i < long.MaxValue; i++) {
-					UIApplication.SharedApplication.InvokeOnMainThread(() => {
-						Ticked(this, new TickedEventArgs(i));
-					});
-				}
-			});
+			try {
+
+				await Task.Run (() => {
+
+					for (long i = 0; i < long.MaxValue; i++) {
+						UIApplication.SharedApplication.InvokeOnMainThread (() => {
+							Ticked (this, new TickedEventArgs (i));
+						});
+					}
+				}, _cts.Token);
+
+			} catch (OperationCanceledException opEx) {
+				var s = opEx.Message;
+
+			}
 
 			UIApplication.SharedApplication.EndBackgroundTask (_taskId);
 		}
 
+		public void Stop ()
+		{
+			_cts.Cancel ();
+		}
+
 		void OnExpiration ()
 		{
-			UIApplication.SharedApplication.EndBackgroundTask (_taskId);
+			_cts.Cancel ();
+			//UIApplication.SharedApplication.EndBackgroundTask (_taskId);
 		}
 	}
 }
