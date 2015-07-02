@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage 
-	xmlns="http://xamarin.com/schemas/2014/forms" 
-	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	x:Class="FormsBackgrounding.BackgroundPage">
 
 	<StackLayout>
@@ -9,6 +9,6 @@
 		<Label Text="Ticker" x:Name="ticker" TextColor="Black" />
 		<Button Text="Start Internet Download" x:Name="download" />
 		<Label Text="Status" x:Name="downloadStatus" TextColor="Black" />
-		
+        <Image x:Name="catImage" Aspect="AspectFill" HeightRequest="150" WidthRequest="150"></Image>
 	</StackLayout>
 </ContentPage>

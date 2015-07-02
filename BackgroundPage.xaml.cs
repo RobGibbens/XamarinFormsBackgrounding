@@ -23,8 +23,10 @@ namespace FormsBackgrounding
 			});
 
 			MessagingCenter.Subscribe<DownloadFinishedMessage> (this, "DownloadFinishedMessage", (message) => {
-				Device.BeginInvokeOnMainThread(() => {
-					this.downloadStatus.Text = message.FilePath;
+				Device.BeginInvokeOnMainThread(() =>
+				{
+				    catImage.Source = FileImageSource.FromFile(message.FilePath);
+					//this.downloadStatus.Text = message.FilePath;
 				});
 			});
 		}
@@ -40,6 +42,7 @@ namespace FormsBackgrounding
 
 		void Download (object sender, EventArgs e)
 		{
+		    this.catImage.Source = null;
 			var message = new DownloadMessage {
 				Url = "http://xamarinuniversity.blob.core.windows.net/ios210/huge_monkey.png"
 			};
