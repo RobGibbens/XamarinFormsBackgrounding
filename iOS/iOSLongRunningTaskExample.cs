@@ -24,6 +24,8 @@ namespace FormsBackgrounding.iOS
 				await Task.Run (() => {
 
 					for (long i = 0; i < long.MaxValue; i++) {
+						_cts.Token.ThrowIfCancellationRequested ();
+
 						UIApplication.SharedApplication.InvokeOnMainThread (() => {
 							Ticked (this, new TickedEventArgs (i));
 						});

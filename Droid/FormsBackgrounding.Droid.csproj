@@ -73,8 +73,12 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="LongRunningService.cs" />
     <Compile Include="DroidLongRunningTaskExample.cs" />
+    <Compile Include="DroidLongRunningService.cs" />
+    <Compile Include="App.cs" />
+    <Compile Include="ServiceConnectionEventArgs.cs" />
+    <Compile Include="LongRunningServiceConnection.cs" />
+    <Compile Include="LongRunningServiceBinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace FormsBackgrounding.Droid
 {
-
 	[Service]
-	public class LongRunningService : Service
+	public class DroidLongRunningService : Service
 	{
 		public event EventHandler<TickedEventArgs> Ticked = delegate{};
 
 		public override IBinder OnBind (Intent intent)
 		{
-			return null;
+			return new LongRunningServiceBinder (this);
 		}
 
 		public override StartCommandResult OnStartCommand (Intent intent, StartCommandFlags flags, int startId)

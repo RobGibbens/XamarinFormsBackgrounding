@@ -6,10 +6,13 @@ namespace FormsBackgrounding
 {
 	public class App : Application
 	{
+		BackgroundPage _backgroundPage;
+
 		public App (ILongRunningTaskExample longRunningTaskExample)
 		{
-			// The root page of your application
-			MainPage = new BackgroundPage(longRunningTaskExample);
+			_backgroundPage = new BackgroundPage (longRunningTaskExample);
+
+			MainPage = _backgroundPage;
 		}
 
 		protected override void OnStart ()

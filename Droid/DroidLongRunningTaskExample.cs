@@ -20,7 +20,7 @@ namespace FormsBackgrounding.Droid
 
 		public async Task Start ()
 		{
-			var intent = new Intent (_activity, typeof(LongRunningService));
+			var intent = new Intent (_activity, typeof(DroidLongRunningService));
 
 			_activity.RunOnUiThread (() => {
 				Application.Context.StartService (intent);
