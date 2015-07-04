@@ -9,9 +9,10 @@ namespace FormsBackgrounding
 
 		public BackgroundPage (ILongRunningTaskExample longRunningTaskExample)
 		{
-			_longRunningTaskExample = longRunningTaskExample;
 
 			InitializeComponent ();
+
+			_longRunningTaskExample = longRunningTaskExample;
 
 			longRunningTask.Clicked += StartLongRunningTask;
 			stopLongRunningTask.Clicked += StopLongRunningTask;

@@ -12,7 +12,7 @@ namespace FormsBackgrounding.Droid
 		public event EventHandler<ServiceConnectionEventArgs> ConnectionChanged = delegate{};
 		LongRunningServiceBinder _binder;
 
-		public DroidLongRunningService Service
+		public DroidLongRunningTaskExample Service
 		{
 			get { 
 				return _binder.Service;

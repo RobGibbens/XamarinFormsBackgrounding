@@ -15,22 +15,28 @@ namespace FormsBackgrounding.Droid
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
 
-			ILongRunningTaskExample longRunningTaskExample = new DroidLongRunningTaskExample(this);
-			_app = new FormsBackgrounding.App (longRunningTaskExample);
-			LoadApplication (_app);
-
-			App.Current.ConnectionChanged += (sender, e) => 
-			{
+			App.Current.ConnectionChanged += (sender, e) => {
 				if (e.IsConnected) {
-					App.Current.Service.Ticked += OnLocationChanged;
-				}
-				else {
-					App.Current.Service.Ticked -= OnLocationChanged;
+					ILongRunningTaskExample longRunningTaskExample = App.Current.Service;
+					//ILongRunningTaskExample longRunningTaskExample = new DroidLongRunningTaskExample(this);
+					_app = new FormsBackgrounding.App (longRunningTaskExample);
+					LoadApplication (_app);
 				}
 			};
+
+
+//			App.Current.ConnectionChanged += (sender, e) => 
+//			{
+//				if (e.IsConnected) {
+//					App.Current.Service.Ticked += OnTick;
+//				}
+//				else {
+//					App.Current.Service.Ticked -= OnTick;
+//				}
+//			};
 		}
 
-		void OnLocationChanged (object sender, TickedEventArgs e)
+		void OnTick (object sender, TickedEventArgs e)
 		{
 			
 			var x = e.TickCounter;

@@ -9,9 +9,9 @@ namespace FormsBackgrounding.Droid
 
 	public class LongRunningServiceBinder : Binder
 	{
-		public DroidLongRunningService Service { get; private set; }
+		public DroidLongRunningTaskExample Service { get; private set; }
 
-		public LongRunningServiceBinder (DroidLongRunningService service)
+		public LongRunningServiceBinder (DroidLongRunningTaskExample service)
 		{
 			this.Service = service;
 		}

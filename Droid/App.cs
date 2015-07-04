@@ -18,7 +18,7 @@ namespace FormsBackgrounding.Droid
 
 		// TODO: Demo3 - Step 4 - Provide access to bound service
 		LongRunningServiceConnection lsConnection;
-		public DroidLongRunningService Service
+		public DroidLongRunningTaskExample Service
 		{
 			get 
 			{ 
@@ -35,7 +35,7 @@ namespace FormsBackgrounding.Droid
 				var context = Application.Context;
 
 				// Start the service - since it's in our process.
-				var intent = new Intent(context, typeof(DroidLongRunningService));
+				var intent = new Intent(context, typeof(DroidLongRunningTaskExample));
 				context.StartService(intent);
 
 				// TODO: Demo3 - Step 5 - Bind to the service
