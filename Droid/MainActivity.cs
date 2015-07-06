@@ -1,6 +1,8 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Xamarin.Forms;
 
 namespace FormsBackgrounding.Droid
 {
@@ -15,30 +17,29 @@ namespace FormsBackgrounding.Droid
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
 
-			App.Current.ConnectionChanged += (sender, e) => {
-				if (e.IsConnected) {
-					ILongRunningTaskExample longRunningTaskExample = App.Current.Service;
-					//ILongRunningTaskExample longRunningTaskExample = new DroidLongRunningTaskExample(this);
-					_app = new FormsBackgrounding.App (longRunningTaskExample);
-					LoadApplication (_app);
-				}
-			};
+            ILongRunningTaskExample longRunningTaskExample = null;
+            //ILongRunningTaskExample longRunningTaskExample = new DroidLongRunningTaskExample(this);
+            _app = new FormsBackgrounding.App(longRunningTaskExample);
+            LoadApplication(_app);
+
+            MessagingCenter.Subscribe<DownloadMessage>(this, "Download", async (message) => {
+                StartService(new Intent(this, typeof(DownloaderService)));
+            });
 
 
-//			App.Current.ConnectionChanged += (sender, e) => 
-//			{
-//				if (e.IsConnected) {
-//					App.Current.Service.Ticked += OnTick;
-//				}
-//				else {
-//					App.Current.Service.Ticked -= OnTick;
-//				}
-//			};
-		}
+            //			App.Current.ConnectionChanged += (sender, e) =>
+            //			{
+            //				if (e.IsConnected) {
+            //					App.Current.Service.Ticked += OnTick;
+            //				}
+            //				else {
+            //					App.Current.Service.Ticked -= OnTick;
+            //				}
+            //			};
+        }
 
 		void OnTick (object sender, TickedEventArgs e)
 		{
-			
 			var x = e.TickCounter;
 		}
 	}

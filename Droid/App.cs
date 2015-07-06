@@ -20,10 +20,10 @@ namespace FormsBackgrounding.Droid
 		LongRunningServiceConnection lsConnection;
 		public DroidLongRunningTaskExample Service
 		{
-			get 
-			{ 
-				return lsConnection.Service; 
-				//				throw new NotImplementedException(); 
+			get
+			{
+				return lsConnection.Service;
+				//				throw new NotImplementedException();
 			}
 		}
 

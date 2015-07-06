@@ -16,7 +16,7 @@ namespace FormsBackgrounding.Droid
 
 		public DroidLongRunningTaskExample ()
 		{
-			
+
 		}
 		public DroidLongRunningTaskExample (Activity activity)
 		{
@@ -30,8 +30,6 @@ namespace FormsBackgrounding.Droid
 
 		public override StartCommandResult OnStartCommand (Intent intent, StartCommandFlags flags, int startId)
 		{
-			
-
 			return StartCommandResult.Sticky;
 		}
 

@@ -14,7 +14,7 @@ namespace FormsBackgrounding.Droid
 
 		public DroidLongRunningTaskExample Service
 		{
-			get { 
+			get {
 				return _binder.Service;
 			}
 		}
@@ -30,7 +30,5 @@ namespace FormsBackgrounding.Droid
 			ConnectionChanged (this, new ServiceConnectionEventArgs (false));
 			_binder = null;
 		}
-		
 	}
-
 }

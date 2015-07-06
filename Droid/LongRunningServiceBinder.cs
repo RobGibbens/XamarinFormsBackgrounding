@@ -16,5 +16,4 @@ namespace FormsBackgrounding.Droid
 			this.Service = service;
 		}
 	}
-
 }
