@@ -6,9 +6,9 @@ namespace FormsBackgrounding
 	{
 		BackgroundPage _backgroundPage;
 
-		public App (ILongRunningTaskExample longRunningTaskExample)
+		public App ()
 		{
-			_backgroundPage = new BackgroundPage (longRunningTaskExample);
+			_backgroundPage = new BackgroundPage ();
 
 			MainPage = _backgroundPage;
 		}

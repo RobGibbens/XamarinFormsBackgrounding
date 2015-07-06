@@ -2,12 +2,13 @@ using System;
 using UIKit;
 using System.Threading.Tasks;
 using System.Threading;
+using Xamarin.Forms;
 
 namespace FormsBackgrounding.iOS
 {
-	public class iOSLongRunningTaskExample : ILongRunningTaskExample
+	public class iOSLongRunningTaskExample
 	{
-		public event EventHandler<TickedEventArgs> Ticked = delegate {};
+		//public event EventHandler<TickedEventArgs> Ticked = delegate {};
 
 		nint _taskId;
 		CancellationTokenSource _cts = new CancellationTokenSource ();
@@ -26,14 +27,23 @@ namespace FormsBackgrounding.iOS
 					for (long i = 0; i < long.MaxValue; i++) {
 						_cts.Token.ThrowIfCancellationRequested ();
 
+						var message = new TickedMessage { 
+							Message = i.ToString()
+						};
+								
 						UIApplication.SharedApplication.InvokeOnMainThread (() => {
-							Ticked (this, new TickedEventArgs (i));
+							MessagingCenter.Send<TickedMessage>(message, "TickedMessage");
 						});
 					}
 				}, _cts.Token);
 
 			} catch (OperationCanceledException opEx) {
-				var s = opEx.Message;
+				var message = new TickedMessage { 
+					Message = "Cancelled"
+				};
+				UIApplication.SharedApplication.InvokeOnMainThread (() => {
+					MessagingCenter.Send<TickedMessage>(message, "TickedMessage");
+				});
 
 			}
 

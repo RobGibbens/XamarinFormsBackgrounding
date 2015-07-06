@@ -17,8 +17,8 @@ namespace FormsBackgrounding.Droid
 
 			Forms.Init (this, bundle);
 
-            ILongRunningTaskExample longRunningTaskExample = null;
-            _app = new FormsBackgrounding.App(longRunningTaskExample);
+            //ILongRunningTaskExample longRunningTaskExample = null;
+            _app = new FormsBackgrounding.App();
             LoadApplication(_app);
 
             MessagingCenter.Subscribe<DownloadMessage>(this, "Download", message => {

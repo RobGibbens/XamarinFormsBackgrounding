@@ -8,7 +8,7 @@ using Android.OS;
 namespace FormsBackgrounding.Droid
 {
 	[Service]
-	public class DroidLongRunningTaskExample : Service, ILongRunningTaskExample
+	public class DroidLongRunningTaskExample : Service
 	{
 		public event EventHandler<TickedEventArgs> Ticked = delegate {};
 

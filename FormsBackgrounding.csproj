@@ -36,7 +36,6 @@
     <Compile Include="BackgroundPage.xaml.cs">
       <DependentUpon>BackgroundPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ILongRunningTaskExample.cs" />
     <Compile Include="TickedEventArgs.cs" />
     <Compile Include="DownloadMessage.cs" />
     <Compile Include="DownloadProgressMessage.cs" />

@@ -5,26 +5,27 @@ namespace FormsBackgrounding
 {
 	public partial class BackgroundPage : ContentPage
 	{
-		ILongRunningTaskExample _longRunningTaskExample;
-
-		public BackgroundPage (ILongRunningTaskExample longRunningTaskExample)
+		public BackgroundPage ()
 		{
-
 			InitializeComponent ();
-
-			_longRunningTaskExample = longRunningTaskExample;
 
 			longRunningTask.Clicked += StartLongRunningTask;
 			stopLongRunningTask.Clicked += StopLongRunningTask;
 			download.Clicked += Download;
 
-			MessagingCenter.Subscribe<DownloadProgressMessage> (this, "DownloadProgressMessage", (message) => {
+			MessagingCenter.Subscribe<TickedMessage> (this, "TickedMessage", message => {
+				Device.BeginInvokeOnMainThread(() => {
+					ticker.Text = message.Message.ToString ();
+				});
+			});
+
+			MessagingCenter.Subscribe<DownloadProgressMessage> (this, "DownloadProgressMessage", message => {
 				Device.BeginInvokeOnMainThread(() => {
 					this.downloadStatus.Text = message.Percentage.ToString("P2");
 				});
 			});
 
-			MessagingCenter.Subscribe<DownloadFinishedMessage> (this, "DownloadFinishedMessage", (message) => {
+			MessagingCenter.Subscribe<DownloadFinishedMessage> (this, "DownloadFinishedMessage", message => {
 				Device.BeginInvokeOnMainThread(() =>
 				{
 				    catImage.Source = FileImageSource.FromFile(message.FilePath);
@@ -34,16 +35,14 @@ namespace FormsBackgrounding
 
 		async void StartLongRunningTask (object sender, EventArgs e)
 		{
-			_longRunningTaskExample.Ticked += (s1, e1) => {
-				ticker.Text = e1.TickCounter.ToString ();
-			};
-
-			await _longRunningTaskExample.Start ();
+			var message = new StartLongRunningTaskMessage ();
+			MessagingCenter.Send<StartLongRunningTaskMessage> (message, "StartLongRunningTaskMessage");
 		}
 
 		void StopLongRunningTask (object sender, EventArgs e)
 		{
-			_longRunningTaskExample.Stop ();
+			var message = new StopLongRunningTaskMessage ();
+			MessagingCenter.Send<StopLongRunningTaskMessage> (message, "StopLongRunningTaskMessage");
 		}
 
 		void Download (object sender, EventArgs e)

@@ -8,16 +8,27 @@ namespace FormsBackgrounding.iOS
 	[Register ("AppDelegate")]
 	public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
 	{
+		iOSLongRunningTaskExample longRunningTaskExample;
+
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
 			Forms.Init ();
 
-			ILongRunningTaskExample longRunningTaskExample = new iOSLongRunningTaskExample ();
-			LoadApplication (new App (longRunningTaskExample));
+
+			LoadApplication (new App ());
 
 			MessagingCenter.Subscribe<DownloadMessage> (this, "Download", async (message) => {
 				var downloader = new Downloader(message.Url);
 				await downloader.DownloadFile();
+			});
+
+			MessagingCenter.Subscribe<StartLongRunningTaskMessage> (this, "StartLongRunningTaskMessage", async message => {
+				longRunningTaskExample = new iOSLongRunningTaskExample();
+				await longRunningTaskExample.Start();
+			});
+
+			MessagingCenter.Subscribe<StopLongRunningTaskMessage> (this, "StopLongRunningTaskMessage", message => {
+				longRunningTaskExample.Stop();
 			});
 
 			return base.FinishedLaunching (app, options);
