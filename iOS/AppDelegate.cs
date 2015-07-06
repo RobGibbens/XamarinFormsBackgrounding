@@ -10,12 +10,7 @@ namespace FormsBackgrounding.iOS
 	{
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
-			global::Xamarin.Forms.Forms.Init ();
-
-			// Code for starting up the Xamarin Test Cloud Agent
-			#if ENABLE_TEST_CLOUD
-			Xamarin.Calabash.Start();
-			#endif
+			Forms.Init ();
 
 			ILongRunningTaskExample longRunningTaskExample = new iOSLongRunningTaskExample ();
 			LoadApplication (new App (longRunningTaskExample));
@@ -28,16 +23,8 @@ namespace FormsBackgrounding.iOS
 			return base.FinishedLaunching (app, options);
 		}
 
-
-
-		/// <summary>
-		/// We have to call this if our transfer (of all files!) is done.
-		/// </summary>
 		public static Action BackgroundSessionCompletionHandler;
 
-		/// <summary>
-		/// Gets called by iOS if we are required to handle something regarding our background downloads.
-		/// </summary>
 		public override void HandleEventsForBackgroundUrl (UIApplication application, string sessionIdentifier, Action completionHandler)
 		{
 			Console.WriteLine ("HandleEventsForBackgroundUrl(): " + sessionIdentifier);
@@ -45,7 +32,4 @@ namespace FormsBackgrounding.iOS
 			BackgroundSessionCompletionHandler = completionHandler;
 		}
 	}
-
-
-
 }

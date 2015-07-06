@@ -28,7 +28,6 @@ namespace FormsBackgrounding
 				Device.BeginInvokeOnMainThread(() =>
 				{
 				    catImage.Source = FileImageSource.FromFile(message.FilePath);
-					//this.downloadStatus.Text = message.FilePath;
 				});
 			});
 		}

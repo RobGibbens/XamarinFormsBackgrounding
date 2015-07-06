@@ -15,29 +15,17 @@ namespace FormsBackgrounding.Droid
 		{
 			base.OnCreate (bundle);
 
-			global::Xamarin.Forms.Forms.Init (this, bundle);
+			Forms.Init (this, bundle);
 
             ILongRunningTaskExample longRunningTaskExample = null;
-            //ILongRunningTaskExample longRunningTaskExample = new DroidLongRunningTaskExample(this);
             _app = new FormsBackgrounding.App(longRunningTaskExample);
             LoadApplication(_app);
 
-            MessagingCenter.Subscribe<DownloadMessage>(this, "Download", async (message) => {
+            MessagingCenter.Subscribe<DownloadMessage>(this, "Download", message => {
 				var intent = new Intent(this, typeof(DownloaderService));
 				intent.PutExtra("url", message.Url);
                 StartService(intent);
             });
-
-
-            //			App.Current.ConnectionChanged += (sender, e) =>
-            //			{
-            //				if (e.IsConnected) {
-            //					App.Current.Service.Ticked += OnTick;
-            //				}
-            //				else {
-            //					App.Current.Service.Ticked -= OnTick;
-            //				}
-            //			};
         }
 
 		void OnTick (object sender, TickedEventArgs e)

@@ -48,7 +48,6 @@ namespace FormsBackgrounding.iOS
 		void OnExpiration ()
 		{
 			_cts.Cancel ();
-			//UIApplication.SharedApplication.EndBackgroundTask (_taskId);
 		}
 	}
 }

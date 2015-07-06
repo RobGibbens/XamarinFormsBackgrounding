@@ -1,5 +1,4 @@
 using System;
-
 using Xamarin.Forms;
 using System.Threading.Tasks;
 
@@ -14,5 +13,4 @@ namespace FormsBackgrounding
 			this.TickCounter = tickCounter;
 		}
 	}
-		
 }

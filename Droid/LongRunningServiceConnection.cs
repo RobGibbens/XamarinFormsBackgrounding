@@ -1,12 +1,9 @@
 using System;
-using Android.App;
 using Android.Content;
 using Android.OS;
-using System.Threading.Tasks;
 
 namespace FormsBackgrounding.Droid
 {
-
 	public class LongRunningServiceConnection : Java.Lang.Object, IServiceConnection
 	{
 		public event EventHandler<ServiceConnectionEventArgs> ConnectionChanged = delegate{};
