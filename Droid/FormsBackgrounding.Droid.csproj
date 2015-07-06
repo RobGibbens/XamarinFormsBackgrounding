@@ -79,6 +79,7 @@
     <Compile Include="ServiceConnectionEventArgs.cs" />
     <Compile Include="LongRunningServiceConnection.cs" />
     <Compile Include="LongRunningServiceBinder.cs" />
+    <Compile Include="ImageHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

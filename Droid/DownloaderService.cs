@@ -15,22 +15,36 @@ namespace FormsBackgrounding.Droid
             return null;
         }
 
-        public override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId)
+        public  override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId)
         {
-            Task.Run(() =>
-            {
-                for (long i = 0; i < long.MaxValue; i++)
-                {
-                    var message = new DownloadProgressMessage()
-                    {
-                        BytesWritten = i,
-                        TotalBytesExpectedToWrite = i,
-                        TotalBytesWritten = i,
-                        Percentage = i
-                    };
-                    MessagingCenter.Send<DownloadProgressMessage>(message, "DownloadProgressMessage");
-                }
-            });
+			var url = intent.GetStringExtra ("url");
+			Task.Run (() => {
+				ImageHelper.DownloadImageAsync (url).ContinueWith((filePath) =>{
+					var message = new DownloadFinishedMessage {
+						FilePath = filePath.Result
+					};
+					//Android.App.Application.SynchronizationContext.Post (_ => {
+						MessagingCenter.Send<DownloadFinishedMessage>(message, "DownloadFinishedMessage");
+					
+					//}, null);
+				});
+
+
+			});
+//            Task.Run(() =>
+//            {
+//                for (long i = 0; i < long.MaxValue; i++)
+//                {
+//                    var message = new DownloadProgressMessage()
+//                    {
+//                        BytesWritten = i,
+//                        TotalBytesExpectedToWrite = i,
+//                        TotalBytesWritten = i,
+//                        Percentage = i / 100
+//                    };
+//                    MessagingCenter.Send<DownloadProgressMessage>(message, "DownloadProgressMessage");
+//                }
+//            });
 
             return StartCommandResult.Sticky;
         }

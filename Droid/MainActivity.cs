@@ -23,7 +23,9 @@ namespace FormsBackgrounding.Droid
             LoadApplication(_app);
 
             MessagingCenter.Subscribe<DownloadMessage>(this, "Download", async (message) => {
-                StartService(new Intent(this, typeof(DownloaderService)));
+				var intent = new Intent(this, typeof(DownloaderService));
+				intent.PutExtra("url", message.Url);
+                StartService(intent);
             });
 
 
