@@ -4,6 +4,7 @@ using Android.Content;
 using Android.OS;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using FormsBackgrounding.Messages;
 
 namespace FormsBackgrounding.Droid
 {

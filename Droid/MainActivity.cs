@@ -3,34 +3,45 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Xamarin.Forms;
+using FormsBackgrounding.Messages;
 
 namespace FormsBackgrounding.Droid
 {
 	[Activity (Label = "FormsBackgrounding.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
 	{
-		FormsBackgrounding.App _app;
-
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
 
 			Forms.Init (this, bundle);
 
-            //ILongRunningTaskExample longRunningTaskExample = null;
-            _app = new FormsBackgrounding.App();
-            LoadApplication(_app);
+			LoadApplication(new App());
 
-            MessagingCenter.Subscribe<DownloadMessage>(this, "Download", message => {
-				var intent = new Intent(this, typeof(DownloaderService));
-				intent.PutExtra("url", message.Url);
-                StartService(intent);
-            });
+			WireUpLongRunningTask ();
+			WireUpLongDownloadTask ();
         }
 
-		void OnTick (object sender, TickedEventArgs e)
+		void WireUpLongRunningTask()
 		{
-			var x = e.TickCounter;
+			MessagingCenter.Subscribe<StartLongRunningTaskMessage> (this, "StartLongRunningTaskMessage", async message =>  {
+				var intent = new Intent(this, typeof(LongRunningTaskService));
+				StartService(intent);
+			});
+
+			MessagingCenter.Subscribe<StopLongRunningTaskMessage> (this, "StopLongRunningTaskMessage", message =>  {
+				var intent = new Intent(this, typeof(LongRunningTaskService));
+				StopService(intent);
+			});
+		}
+
+		void WireUpLongDownloadTask ()
+		{
+			MessagingCenter.Subscribe<DownloadMessage> (this, "Download", message =>  {
+				var intent = new Intent (this, typeof(DownloaderService));
+				intent.PutExtra ("url", message.Url);
+				StartService (intent);
+			});
 		}
 	}
 }

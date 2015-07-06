@@ -3,6 +3,7 @@ using UIKit;
 using Xamarin.Forms;
 using System;
 using System.IO;
+using FormsBackgrounding.Messages;
 
 namespace FormsBackgrounding.iOS
 {

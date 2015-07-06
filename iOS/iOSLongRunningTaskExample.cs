@@ -3,13 +3,12 @@ using UIKit;
 using System.Threading.Tasks;
 using System.Threading;
 using Xamarin.Forms;
+using FormsBackgrounding.Messages;
 
 namespace FormsBackgrounding.iOS
 {
 	public class iOSLongRunningTaskExample
 	{
-		//public event EventHandler<TickedEventArgs> Ticked = delegate {};
-
 		nint _taskId;
 		CancellationTokenSource _cts = new CancellationTokenSource ();
 

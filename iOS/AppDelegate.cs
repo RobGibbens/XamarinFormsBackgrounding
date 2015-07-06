@@ -2,6 +2,7 @@
 using UIKit;
 using Xamarin.Forms;
 using System;
+using FormsBackgrounding.Messages;
 
 namespace FormsBackgrounding.iOS
 {
@@ -14,24 +15,31 @@ namespace FormsBackgrounding.iOS
 		{
 			Forms.Init ();
 
-
 			LoadApplication (new App ());
 
-			MessagingCenter.Subscribe<DownloadMessage> (this, "Download", async (message) => {
-				var downloader = new Downloader(message.Url);
-				await downloader.DownloadFile();
-			});
-
-			MessagingCenter.Subscribe<StartLongRunningTaskMessage> (this, "StartLongRunningTaskMessage", async message => {
-				longRunningTaskExample = new iOSLongRunningTaskExample();
-				await longRunningTaskExample.Start();
-			});
-
-			MessagingCenter.Subscribe<StopLongRunningTaskMessage> (this, "StopLongRunningTaskMessage", message => {
-				longRunningTaskExample.Stop();
-			});
+			WireUpDownloadTask ();
+			WireUpLongRunningTask ();
 
 			return base.FinishedLaunching (app, options);
+		}
+
+		void WireUpLongRunningTask ()
+		{
+			MessagingCenter.Subscribe<StartLongRunningTaskMessage> (this, "StartLongRunningTaskMessage", async message =>  {
+				longRunningTaskExample = new iOSLongRunningTaskExample ();
+				await longRunningTaskExample.Start ();
+			});
+			MessagingCenter.Subscribe<StopLongRunningTaskMessage> (this, "StopLongRunningTaskMessage", message =>  {
+				longRunningTaskExample.Stop ();
+			});
+		}
+
+		void WireUpDownloadTask ()
+		{
+			MessagingCenter.Subscribe<DownloadMessage> (this, "Download", async message =>  {
+				var downloader = new Downloader (message.Url);
+				await downloader.DownloadFile ();
+			});
 		}
 
 		public static Action BackgroundSessionCompletionHandler;

@@ -1,4 +1,4 @@
-namespace FormsBackgrounding
+namespace FormsBackgrounding.Messages
 {
 	public class DownloadProgressMessage
 	{
