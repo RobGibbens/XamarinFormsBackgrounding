@@ -34,16 +34,16 @@ namespace FormsBackgrounding
 			});
 		}
 
-		async void StartLongRunningTask (object sender, EventArgs e)
+		private void StartLongRunningTask (object sender, EventArgs e)
 		{
 			var message = new StartLongRunningTaskMessage ();
-			MessagingCenter.Send<StartLongRunningTaskMessage> (message, "StartLongRunningTaskMessage");
+			MessagingCenter.Send (message, "StartLongRunningTaskMessage");
 		}
 
-		void StopLongRunningTask (object sender, EventArgs e)
+		private void StopLongRunningTask (object sender, EventArgs e)
 		{
 			var message = new StopLongRunningTaskMessage ();
-			MessagingCenter.Send<StopLongRunningTaskMessage> (message, "StopLongRunningTaskMessage");
+			MessagingCenter.Send (message, "StopLongRunningTaskMessage");
 		}
 
 		void Download (object sender, EventArgs e)
@@ -53,7 +53,7 @@ namespace FormsBackgrounding
 				Url = "http://xamarinuniversity.blob.core.windows.net/ios210/huge_monkey.png"
 			};
 
-			MessagingCenter.Send<DownloadMessage> (message, "Download");
+			MessagingCenter.Send (message, "Download");
 		}
 	}
 }

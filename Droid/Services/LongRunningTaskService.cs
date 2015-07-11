@@ -13,7 +13,6 @@ namespace FormsBackgrounding.Droid
 	{
 		CancellationTokenSource _cts = new CancellationTokenSource ();
 
-
 		public override IBinder OnBind (Intent intent)
 		{
 			return null;
@@ -30,23 +29,23 @@ namespace FormsBackgrounding.Droid
 						_cts.Token.ThrowIfCancellationRequested ();
 
 						Thread.Sleep(1000);
-						var message = new TickedMessage { 
+						var message = new TickedMessage {
 							Message = i.ToString ()
 						};
 
 						Android.App.Application.SynchronizationContext.Post (_ => {
-							MessagingCenter.Send<TickedMessage> (message, "TickedMessage");
+							MessagingCenter.Send (message, "TickedMessage");
 						}, null);
 
 					}
 				}, _cts.Token);
 
-			} catch (System.OperationCanceledException opEx) {
-				var message = new TickedMessage { 
+			} catch (System.OperationCanceledException) {
+				var message = new TickedMessage {
 					Message = "Cancelled"
 				};
 				Android.App.Application.SynchronizationContext.Post (_ => {
-					MessagingCenter.Send<TickedMessage> (message, "TickedMessage");
+					MessagingCenter.Send (message, "TickedMessage");
 				}, null);
 			}
 			return StartCommandResult.Sticky;
@@ -57,6 +56,5 @@ namespace FormsBackgrounding.Droid
 			_cts.Cancel ();
 			base.OnDestroy ();
 		}
-
 	}
 }

@@ -11,7 +11,7 @@ namespace FormsBackgrounding.Droid
 		private string Path
 		{
 			get {
-				string baseDir = System.Environment.GetFolderPath (System.Environment.SpecialFolder.Personal);
+				string baseDir = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
 				return System.IO.Path.Combine (baseDir, "monkey.png");
 			}
 		}
@@ -24,17 +24,16 @@ namespace FormsBackgrounding.Droid
 		public Task<string> DownloadImageAsync (string url)
 		{
 			if (NeedsDownload()) {
-				return Task.Run<string> (() => DownloadImage (url));
+				return Task.Run (() => DownloadImage (url));
 			} else {
-				return Task.FromResult<string>(this.Path);
+				return Task.FromResult(this.Path);
 			}
 		}
 
 		private string DownloadImage (string url)
 		{
 			try {
-				byte[] imageBytes;
-				using (var mstream = new MemoryStream ()) {
+			    using (var stream = new MemoryStream ()) {
 					using (var imageUrl = new Java.Net.URL (url)) {
 						var options = new BitmapFactory.Options {
 							InSampleSize = 1,
@@ -42,9 +41,9 @@ namespace FormsBackgrounding.Droid
 						};
 
 						var bit = BitmapFactory.DecodeStream (imageUrl.OpenStream (), null, options);
-						bit.Compress (Bitmap.CompressFormat.Png, 70, mstream);
+						bit.Compress (Bitmap.CompressFormat.Png, 70, stream);
 					}
-					imageBytes = mstream.ToArray ();
+					var imageBytes = stream.ToArray ();
 
 					File.WriteAllBytes (this.Path, imageBytes);
 				}

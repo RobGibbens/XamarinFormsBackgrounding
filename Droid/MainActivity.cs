@@ -24,7 +24,7 @@ namespace FormsBackgrounding.Droid
 
 		void WireUpLongRunningTask()
 		{
-			MessagingCenter.Subscribe<StartLongRunningTaskMessage> (this, "StartLongRunningTaskMessage", async message =>  {
+			MessagingCenter.Subscribe<StartLongRunningTaskMessage> (this, "StartLongRunningTaskMessage", message =>  {
 				var intent = new Intent(this, typeof(LongRunningTaskService));
 				StartService(intent);
 			});
