@@ -5,13 +5,14 @@ using Android.OS;
 using System.Threading;
 using Xamarin.Forms;
 using FormsBackgrounding.Messages;
+using System;
 
 namespace FormsBackgrounding.Droid
 {
 	[Service]
 	public class LongRunningTaskService : Service
 	{
-		CancellationTokenSource _cts = new CancellationTokenSource ();
+		CancellationTokenSource _cts;
 
 		public override IBinder OnBind (Intent intent)
 		{
@@ -25,10 +26,10 @@ namespace FormsBackgrounding.Droid
 
 			try {
 				Task.Run (() => {
-					for (long i = 0; i < long.MaxValue; i++) {
-						_cts.Token.ThrowIfCancellationRequested ();
+					_cts.Token.ThrowIfCancellationRequested ();
 
-						Thread.Sleep(1000);
+					for (long i = 0; i < long.MaxValue; i++) {
+						Thread.Sleep(250);
 						var message = new TickedMessage {
 							Message = i.ToString ()
 						};
@@ -36,24 +37,31 @@ namespace FormsBackgrounding.Droid
 						Android.App.Application.SynchronizationContext.Post (_ => {
 							MessagingCenter.Send (message, "TickedMessage");
 						}, null);
-
 					}
+
 				}, _cts.Token);
 
-			} catch (System.OperationCanceledException) {
+			} catch (System.OperationCanceledException opEx) {
 				var message = new TickedMessage {
 					Message = "Cancelled"
 				};
+
 				Android.App.Application.SynchronizationContext.Post (_ => {
 					MessagingCenter.Send (message, "TickedMessage");
 				}, null);
+			} catch (Exception ex) {
+				var ssds = ex.Message;
 			}
 			return StartCommandResult.Sticky;
 		}
 
 		public override void OnDestroy ()
 		{
-			_cts.Cancel ();
+			if (_cts != null) {
+				_cts.Token.ThrowIfCancellationRequested ();
+
+				_cts.Cancel ();
+			}
 			base.OnDestroy ();
 		}
 	}

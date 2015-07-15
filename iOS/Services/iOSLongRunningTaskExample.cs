@@ -26,6 +26,7 @@ namespace FormsBackgrounding.iOS
 					for (long i = 0; i < long.MaxValue; i++) {
 						_cts.Token.ThrowIfCancellationRequested ();
 
+						Thread.Sleep(250);
 						var message = new TickedMessage { 
 							Message = i.ToString()
 						};
