@@ -22,13 +22,11 @@ namespace FormsBackgrounding.Droid
 		public override StartCommandResult OnStartCommand (Intent intent, StartCommandFlags flags, int startId)
 		{
 			_cts = new CancellationTokenSource ();
-			_cts.Token.ThrowIfCancellationRequested ();
 
-			try {
-				Task.Run (() => {
-					_cts.Token.ThrowIfCancellationRequested ();
-
+			Task.Run (() => {
+				try {
 					for (long i = 0; i < long.MaxValue; i++) {
+						_cts.Token.ThrowIfCancellationRequested ();
 						Thread.Sleep(250);
 						var message = new TickedMessage {
 							Message = i.ToString ()
@@ -38,20 +36,19 @@ namespace FormsBackgrounding.Droid
 							MessagingCenter.Send (message, "TickedMessage");
 						}, null);
 					}
+				}
+				finally {
+					if (_cts.IsCancellationRequested) {
+						var message = new TickedMessage {
+							Message = "Cancelled"
+						};
+						Device.BeginInvokeOnMainThread (
+							() => MessagingCenter.Send(message, "TickedMessage"));
+					}
+				}
 
-				}, _cts.Token);
+			}, _cts.Token);
 
-			} catch (System.OperationCanceledException opEx) {
-				var message = new TickedMessage {
-					Message = "Cancelled"
-				};
-
-				Android.App.Application.SynchronizationContext.Post (_ => {
-					MessagingCenter.Send (message, "TickedMessage");
-				}, null);
-			} catch (Exception ex) {
-				var ssds = ex.Message;
-			}
 			return StartCommandResult.Sticky;
 		}
 
