@@ -43,7 +43,8 @@ namespace FormsBackgrounding.Droid
 							Message = "Cancelled"
 						};
 						Device.BeginInvokeOnMainThread (
-							() => MessagingCenter.Send(message, "TickedMessage"));
+							() => MessagingCenter.Send(message, "TickedMessage")
+						);
 					}
 				}
 

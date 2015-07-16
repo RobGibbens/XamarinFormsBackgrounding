@@ -10,12 +10,11 @@ namespace FormsBackgrounding.iOS
 	public class iOSLongRunningTaskExample
 	{
 		nint _taskId;
-		CancellationTokenSource _cts = new CancellationTokenSource ();
+		CancellationTokenSource _cts;
 
 		public async Task Start ()
 		{
 			_cts = new CancellationTokenSource ();
-			_cts.Token.ThrowIfCancellationRequested ();
 
 			_taskId = UIApplication.SharedApplication.BeginBackgroundTask ("LongRunningTask", OnExpiration);
 
@@ -36,15 +35,17 @@ namespace FormsBackgrounding.iOS
 						});
 					}
 				}, _cts.Token);
-
 			} catch (OperationCanceledException opEx) {
-				var message = new TickedMessage { 
-					Message = "Cancelled"
-				};
-				UIApplication.SharedApplication.InvokeOnMainThread (() => {
-					MessagingCenter.Send<TickedMessage>(message, "TickedMessage");
-				});
-
+				//UIApplication.SharedApplication.EndBackgroundTask (_taskId);
+			} finally {
+				if (_cts.IsCancellationRequested) {
+					var message = new TickedMessage {
+						Message = "Cancelled"
+					};
+					Device.BeginInvokeOnMainThread (
+						() => MessagingCenter.Send(message, "TickedMessage")
+					);
+				}
 			}
 
 			UIApplication.SharedApplication.EndBackgroundTask (_taskId);
