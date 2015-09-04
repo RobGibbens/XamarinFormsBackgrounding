@@ -5,7 +5,6 @@ using Android.OS;
 using System.Threading;
 using Xamarin.Forms;
 using FormsBackgrounding.Messages;
-using System;
 
 namespace FormsBackgrounding.Droid
 {
@@ -25,25 +24,16 @@ namespace FormsBackgrounding.Droid
 
 			Task.Run (() => {
 				try {
-					for (long i = 0; i < long.MaxValue; i++) {
-						_cts.Token.ThrowIfCancellationRequested ();
-						Thread.Sleep(250);
-						var message = new TickedMessage {
-							Message = i.ToString ()
-						};
-
-						Android.App.Application.SynchronizationContext.Post (_ => {
-							MessagingCenter.Send (message, "TickedMessage");
-						}, null);
-					}
+					var counter = new TaskCounter();
+					counter.RunCounter(_cts.Token).Wait();
+				}
+				catch (OperationCanceledException opEx) {
 				}
 				finally {
 					if (_cts.IsCancellationRequested) {
-						var message = new TickedMessage {
-							Message = "Cancelled"
-						};
+						var message = new CancelledMessage();
 						Device.BeginInvokeOnMainThread (
-							() => MessagingCenter.Send(message, "TickedMessage")
+							() => MessagingCenter.Send(message, "CancelledMessage")
 						);
 					}
 				}

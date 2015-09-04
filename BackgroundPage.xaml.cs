@@ -9,12 +9,6 @@ namespace FormsBackgrounding
 		public BackgroundPage ()
 		{
 			InitializeComponent ();
-
-
-
-
-
-
 		}
 
 		public DateTime SleepDate
@@ -33,8 +27,5 @@ namespace FormsBackgrounding
 				this.FirstNameEntry.Text = value;
 			}
 		}
-
-
-
 	}
 }

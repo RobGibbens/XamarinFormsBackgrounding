@@ -29,6 +29,7 @@ namespace FormsBackgrounding.iOS
 				longRunningTaskExample = new iOSLongRunningTaskExample ();
 				await longRunningTaskExample.Start ();
 			});
+
 			MessagingCenter.Subscribe<StopLongRunningTaskMessage> (this, "StopLongRunningTaskMessage", message =>  {
 				longRunningTaskExample.Stop ();
 			});

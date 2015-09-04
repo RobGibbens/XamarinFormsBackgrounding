@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-
 using Xamarin.Forms;
 using FormsBackgrounding.Messages;
 
@@ -15,6 +13,12 @@ namespace FormsBackgrounding
 			MessagingCenter.Subscribe<TickedMessage> (this, "TickedMessage", message => {
 				Device.BeginInvokeOnMainThread(() => {
 					ticker.Text = message.Message;
+				});
+			});
+
+			MessagingCenter.Subscribe<CancelledMessage> (this, "CancelledMessage", message => {
+				Device.BeginInvokeOnMainThread(() => {
+					ticker.Text = "Cancelled";
 				});
 			});
 
@@ -35,4 +39,3 @@ namespace FormsBackgrounding
 		}
 	}
 }
-

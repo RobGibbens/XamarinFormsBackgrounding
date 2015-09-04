@@ -1,5 +1,4 @@
 using Foundation;
-using UIKit;
 using Xamarin.Forms;
 using System;
 using System.IO;
@@ -38,9 +37,9 @@ namespace FormsBackgrounding.iOS
 				FilePath = sourceFile,
 				Url = downloadTask.OriginalRequest.Url.AbsoluteString
 			};
+
 			MessagingCenter.Send<DownloadFinishedMessage> (message, "DownloadFinishedMessage");
 			NSFileManager fileManager = NSFileManager.DefaultManager;
-
 
 			var documentsFolderPath = Environment.GetFolderPath (Environment.SpecialFolder.MyDocuments);
 			NSUrl destinationURL = NSUrl.FromFilename (Path.Combine (documentsFolderPath, destFile));
