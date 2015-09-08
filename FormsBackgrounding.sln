@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormsBackgrounding", "FormsBackgrounding.csproj", "{3F591595-77FD-4AD5-A7DD-A6BDB88A4369}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormsBackgrounding.iOS", "iOS\FormsBackgrounding.iOS.csproj", "{DC639DD0-57F2-4A1D-B37A-7546B296F008}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormsBackgrounding.Droid", "Droid\FormsBackgrounding.Droid.csproj", "{2CBA994D-4AB3-4C0C-B84B-6A1295F6305F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormsBackgrounding", "Core\FormsBackgrounding.csproj", "{3F591595-77FD-4AD5-A7DD-A6BDB88A4369}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

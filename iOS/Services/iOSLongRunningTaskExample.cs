@@ -19,9 +19,11 @@ namespace FormsBackgrounding.iOS
 			_taskId = UIApplication.SharedApplication.BeginBackgroundTask ("LongRunningTask", OnExpiration);
 
 			try {
+				//INVOKE THE SHARED CODE
 				var counter = new TaskCounter();
 				await counter.RunCounter(_cts.Token);
-			} catch (OperationCanceledException opEx) {
+
+			} catch (OperationCanceledException) {
 			} finally {
 				if (_cts.IsCancellationRequested) {
 					var message = new CancelledMessage();

@@ -1,56 +1,47 @@
 using Foundation;
 using Xamarin.Forms;
 using System;
-using System.IO;
 using FormsBackgrounding.Messages;
 
 namespace FormsBackgrounding.iOS
 {
 	public class CustomSessionDownloadDelegate : NSUrlSessionDownloadDelegate
 	{
-		string targetFileName;
-
-		public CustomSessionDownloadDelegate (string targetFileName) : base ()
-		{
-			this.targetFileName = targetFileName;
-		}
-
 		public override void DidWriteData (NSUrlSession session, NSUrlSessionDownloadTask downloadTask, long bytesWritten, long totalBytesWritten, long totalBytesExpectedToWrite)
 		{
 			float percentage = (float)totalBytesWritten / (float)totalBytesExpectedToWrite;
+
 			var message = new DownloadProgressMessage () {
 				BytesWritten = bytesWritten,
 				TotalBytesExpectedToWrite = totalBytesExpectedToWrite,
 				TotalBytesWritten = totalBytesWritten,
 				Percentage = percentage
 			};
+
 			MessagingCenter.Send<DownloadProgressMessage> (message, "DownloadProgressMessage");
 		}
 
 		public override void DidFinishDownloading (NSUrlSession session, NSUrlSessionDownloadTask downloadTask, NSUrl location)
 		{
-			var sourceFile = location.Path;
-
-			var destFile = downloadTask.OriginalRequest.Url.AbsoluteString.Substring (downloadTask.OriginalRequest.Url.AbsoluteString.LastIndexOf ("/") + 1);
+			CopyDownloadedImage (location);
 
 			var message = new DownloadFinishedMessage () {
-				FilePath = sourceFile,
+				FilePath = targetFileName,
 				Url = downloadTask.OriginalRequest.Url.AbsoluteString
 			};
 
 			MessagingCenter.Send<DownloadFinishedMessage> (message, "DownloadFinishedMessage");
-			NSFileManager fileManager = NSFileManager.DefaultManager;
 
-			var documentsFolderPath = Environment.GetFolderPath (Environment.SpecialFolder.MyDocuments);
-			NSUrl destinationURL = NSUrl.FromFilename (Path.Combine (documentsFolderPath, destFile));
-
-			NSError error;
-			fileManager.Remove (targetFileName, out error);
-			bool success = fileManager.Copy (sourceFile, targetFileName, out error);
-			if (!success) {
-				Console.WriteLine ("Error during the copy: {0}", error.LocalizedDescription);
-			}
 		}
+
+		#region Methods
+		readonly string targetFileName;
+
+		public CustomSessionDownloadDelegate (string targetFileName) : base ()
+		{
+			this.targetFileName = targetFileName;
+		}
+
 
 		public override void DidCompleteWithError (NSUrlSession session, NSUrlSessionTask task, NSError error)
 		{
@@ -71,5 +62,20 @@ namespace FormsBackgrounding.iOS
 				handler.Invoke ();
 			}
 		}
+
+		private void CopyDownloadedImage (NSUrl location)
+		{
+			NSFileManager fileManager = NSFileManager.DefaultManager;
+			NSError error;
+			if (fileManager.FileExists (targetFileName)) {
+				fileManager.Remove (targetFileName, out error);
+			}
+			bool success = fileManager.Copy (location.Path, targetFileName, out error);
+			if (!success) {
+				Console.WriteLine ("Error during the copy: {0}", error.LocalizedDescription);
+			}
+		}
+
+		#endregion
 	}
 }

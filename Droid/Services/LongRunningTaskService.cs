@@ -24,10 +24,11 @@ namespace FormsBackgrounding.Droid
 
 			Task.Run (() => {
 				try {
+					//INVOKE THE SHARED CODE
 					var counter = new TaskCounter();
 					counter.RunCounter(_cts.Token).Wait();
 				}
-				catch (OperationCanceledException opEx) {
+				catch (OperationCanceledException) {
 				}
 				finally {
 					if (_cts.IsCancellationRequested) {
