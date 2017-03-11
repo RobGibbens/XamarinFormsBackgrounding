@@ -49,7 +49,10 @@ namespace FormsBackgrounding.iOS
 			});
 
 			MessagingCenter.Subscribe<StopLongRunningTaskMessage> (this, "StopLongRunningTaskMessage", message => {
-				longRunningTaskExample.Stop ();
+				if (longRunningTaskExample != null)
+				{
+					longRunningTaskExample.Stop();
+				}
 			});
 		}
 		#endregion

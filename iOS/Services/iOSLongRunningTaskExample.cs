@@ -38,12 +38,18 @@ namespace FormsBackgrounding.iOS
 
 		public void Stop ()
 		{
-			_cts.Cancel ();
+			if (_cts != null)
+			{
+				_cts.Cancel();
+			}
 		}
 
 		void OnExpiration ()
 		{
-			_cts.Cancel ();
+			if (_cts != null)
+			{
+				_cts.Cancel();
+			}
 		}
 	}
 }

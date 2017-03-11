@@ -31,7 +31,7 @@ namespace FormsBackgrounding
 		{
 			this.catImage.Source = null;
 			var message = new DownloadMessage {
-				Url = "http://xamarinuniversity.blob.core.windows.net/ios210/huge_monkey.png"
+				Url = "https://xamarinuniversity.blob.core.windows.net/ios210/huge_monkey.png"
 			};
 
 			MessagingCenter.Send (message, "Download");
